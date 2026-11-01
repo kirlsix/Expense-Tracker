@@ -24,6 +24,7 @@ func OpenExpenses() []Expense {
 			return nil
 		}
 		os.Create("./expenses.json")
+
 	}
 	if len(allExp) > 0 {
 		err = json.Unmarshal(allExp, &exp)
@@ -33,7 +34,15 @@ func OpenExpenses() []Expense {
 	}
 	return exp
 }
+func write(expenses []Expense) {
+	bytedExp, err := json.Marshal(expenses)
+	if err != nil {
+		fmt.Println("Fail to Marshal:", err)
+		return
+	}
 
+	os.WriteFile("./expenses.json", bytedExp, 0644)
+}
 func AddExpense(description string, amount float64) {
 	maxID := 0
 	exp := OpenExpenses()
@@ -49,20 +58,18 @@ func AddExpense(description string, amount float64) {
 	}
 	exp = append(exp, createdExpense)
 
-	bytedExp, err := json.Marshal(exp)
-	if err != nil {
-		fmt.Println("Fail to Marshal:", err)
-		return
-	}
+	write(exp)
 
-	os.WriteFile("./expenses.json", bytedExp, 0644)
 	fmt.Println("Expense added successfully, ID:", createdExpense.ID)
+
 }
 
 func UpdateExpense(id int, description string, amount float64) {
 	allExpenses := OpenExpenses()
+	found := false
 	for i, v := range allExpenses {
 		if v.ID == id {
+			found = true
 			allExpenses[i] = Expense{
 				ID:          v.ID,
 				Date:        v.Date,
@@ -71,13 +78,34 @@ func UpdateExpense(id int, description string, amount float64) {
 			}
 		}
 	}
-	bytedExp, err := json.Marshal(allExpenses)
-	if err != nil {
-		fmt.Println("Fail to Marshal:", err)
+	if !found {
+		fmt.Println("Expense with id", id, "not exists")
 		return
 	}
+	write(allExpenses)
 
-	os.WriteFile("./expenses.json", bytedExp, 0644)
 	fmt.Println("Expense updated successfully, ID:", id)
 
+}
+
+func DeleteExpense(id int) {
+	allExpenses := OpenExpenses()
+	found := false
+
+	var temp []Expense
+	for i, v := range allExpenses {
+		if v.ID != id {
+			temp = append(temp, allExpenses[i])
+		} else {
+			found = true
+		}
+	}
+
+	if !found {
+		fmt.Println("Expense with id", id, "not exists")
+		return
+	}
+	write(temp)
+
+	fmt.Println("Expense deleted successfully")
 }
