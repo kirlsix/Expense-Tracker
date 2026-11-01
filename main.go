@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	expenses.AddExpense("Test", 121)
+	expenses.UpdateExpense(1, "UpdateTest", 1)
 }

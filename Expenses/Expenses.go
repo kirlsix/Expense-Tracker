@@ -58,3 +58,26 @@ func AddExpense(description string, amount float64) {
 	os.WriteFile("./expenses.json", bytedExp, 0644)
 	fmt.Println("Expense added successfully, ID:", createdExpense.ID)
 }
+
+func UpdateExpense(id int, description string, amount float64) {
+	allExpenses := OpenExpenses()
+	for i, v := range allExpenses {
+		if v.ID == id {
+			allExpenses[i] = Expense{
+				ID:          v.ID,
+				Date:        v.Date,
+				Description: description,
+				Amount:      amount,
+			}
+		}
+	}
+	bytedExp, err := json.Marshal(allExpenses)
+	if err != nil {
+		fmt.Println("Fail to Marshal:", err)
+		return
+	}
+
+	os.WriteFile("./expenses.json", bytedExp, 0644)
+	fmt.Println("Expense updated successfully, ID:", id)
+
+}
