@@ -109,3 +109,18 @@ func DeleteExpense(id int) {
 
 	fmt.Println("Expense deleted successfully")
 }
+
+// ID  Date       Description  Amount
+// 1   2024-08-06  Lunch        $20
+// 2   2024-08-06  Dinner       $10
+func ViewAllExpenses() {
+	allExpenses := OpenExpenses()
+	for _, v := range allExpenses {
+
+		fmt.Println("ID:", v.ID)
+		fmt.Println("Date:", v.Date)
+		fmt.Println("Description:", v.Description)
+		fmt.Println("Amount:", v.Amount)
+		fmt.Println("----------------------------------------------")
+	}
+}

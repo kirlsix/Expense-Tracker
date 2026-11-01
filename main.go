@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	expenses.DeleteExpense(1)
+	expenses.ViewAllExpenses()
 }
