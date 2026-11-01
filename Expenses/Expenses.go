@@ -134,3 +134,14 @@ func ViewSummary() {
 	}
 	fmt.Println("Total expenses:", summary)
 }
+
+func ViewSummaryForMonth(month time.Month) {
+	allExpenses := OpenExpenses()
+	var summary float64
+	for _, v := range allExpenses {
+		if v.Date.Month() == month {
+			summary += v.Amount
+		}
+	}
+	fmt.Println("Total expenses for", month, summary)
+}

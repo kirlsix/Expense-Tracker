@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	expenses.ViewSummary()
+	expenses.ViewSummaryForMonth(10)
 }
