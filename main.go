@@ -1,9 +1,10 @@
+/*
+Copyright © 2026 NAME HERE <EMAIL ADDRESS>
+*/
 package main
 
-import (
-	expenses "ExpenceTracker/Expenses"
-)
+import "ExpenceTracker/cmd"
 
 func main() {
-	expenses.ViewSummaryForMonth(10)
+	cmd.Execute()
 }

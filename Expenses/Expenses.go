@@ -44,6 +44,14 @@ func write(expenses []Expense) {
 	os.WriteFile("./expenses.json", bytedExp, 0644)
 }
 func AddExpense(description string, amount float64) {
+	if len(description) <= 3 || description == "--amount" {
+		fmt.Println("The description is short")
+		return
+	}
+	if amount <= 0 {
+		fmt.Println("Invalid amount: must not be negative or zero.")
+		return
+	}
 	maxID := 0
 	exp := OpenExpenses()
 	for _, v := range exp {
@@ -138,6 +146,11 @@ func ViewSummary() {
 func ViewSummaryForMonth(month time.Month) {
 	allExpenses := OpenExpenses()
 	var summary float64
+	if month < 1 || month > 12 {
+		fmt.Println("Invalid month")
+		return
+	}
+
 	for _, v := range allExpenses {
 		if v.Date.Month() == month {
 			summary += v.Amount
