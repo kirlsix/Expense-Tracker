@@ -1,4 +1,4 @@
-<h1>Expense Tracker CLI</h1>
+<h1>Expense Tracker CLI from <a href="https://roadmap.sh/projects/expense-tracker">roadmap.sh</a></h1>
 
 A simple command-line expense tracker for managing your personal finances. Add, update, delete, and view expenses, and get summaries for all time or for a specific month — all from your terminal.
 
